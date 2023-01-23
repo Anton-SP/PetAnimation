@@ -5,6 +5,8 @@ import android.animation.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.ImageView
 
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun initImage() {
         rocket = binding.rocket
         rocket.setOnClickListener { view ->
-            fly()
+            flyToCorner()
 
         }
     }
@@ -37,5 +39,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         animator.start()
     }
 
+    private fun flyToCorner(){
+        val container = rocket.parent as ViewGroup
+        val containerW = container.width
+        val containerH = container.height
 
-}
+      //  val animator = ObjectAnimator.ofFloat(rocket, View.TRANSLATION_X, 200f)
+        val  moverX = ObjectAnimator.ofFloat(rocket, View.TRANSLATION_X, containerW*0.1f)
+        val  moverY = ObjectAnimator.ofFloat(rocket, View.TRANSLATION_Y, containerH*0.1f)
+        val set = AnimatorSet()
+        set.playSequentially(moverX,moverY)
+        set.duration = 1000
+        set.start()
+
+     //   animator.start()
+    }
+
+
+    }
+
